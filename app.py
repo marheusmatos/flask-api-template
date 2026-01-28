@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_restx import Api
-from routes.email import api as email_ns
 from dotenv import load_dotenv
-load_dotenv()
 
 import config
+
+from routes.qa_email import api as qa_email_ns
+
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
@@ -12,14 +14,16 @@ def create_app():
 
     api = Api(
         app,
-        title="Email API",
+        title="QA Email Review API",
         version="1.0",
-        description="Servicio para enviar correos electrónicos"
+        description="API para analistas QA controlarem e auditarem revisões de e-mail feitas por IA"
     )
 
-    api.add_namespace(email_ns, path="/emails")
+    api.add_namespace(qa_email_ns)
+
 
     return app
+
 
 if __name__ == "__main__":
     app = create_app()
